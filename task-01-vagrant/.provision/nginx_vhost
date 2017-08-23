@@ -1,0 +1,54 @@
+server {
+    listen 80;
+    server_name localhost;
+
+    root /var/www/public;
+    index index.php index.html index.htm index.nginx-debian.html;
+
+    # Important for VirtualBox
+    sendfile off;
+
+	
+	location /phpmyadmin {
+               root /usr/share/;
+               index index.php index.html index.htm;
+               location ~ ^/phpmyadmin/(.+\.php)$ {
+                       try_files $uri =404;
+                       root /usr/share/;
+                       fastcgi_pass 127.0.0.1:9000;
+                       fastcgi_index index.php;
+                       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                       include /etc/nginx/fastcgi_params;
+               }
+               location ~* ^/phpmyadmin/(.+\.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt))$ {
+                       root /usr/share/;
+               }
+        }
+        location /phpMyAdmin {
+               rewrite ^/* /phpmyadmin last;
+        }
+		
+    #site root is redirected to the app boot script
+    location = / {
+        try_files @site @site;
+    }
+ 
+    #all other locations try other files first and go to our front controller if none of them exists
+    location / {
+        try_files $uri $uri/ @site;
+    }
+ 
+    #return 404 for all php files as we do have a front controller
+    location ~ \.php$ {
+        return 404;
+    }
+ 
+    location @site {
+        fastcgi_pass   unix:/var/run/php/php7.1-fpm.sock;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME $document_root/index.php;
+    }
+
+    error_log /var/log/nginx/project_error.log;
+    access_log /var/log/nginx/project_access.log;
+}
