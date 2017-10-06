@@ -1,0 +1,12 @@
+<table cellspacing="15"><tr><th></th><th>BIT</th><th>ETH</th></th><th>UAH</th><th>RUB</th><th>USD</th></tr>
+
+{% for id, stringsById in items %}
+    <tr>
+        <th>{{ val[id] }}</th>
+    {% for string in stringsById %}
+        <td> {{ string }}</td>
+    {% endfor %}
+    </tr>
+{% endfor %}
+
+</table>

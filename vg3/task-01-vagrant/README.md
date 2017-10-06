@@ -1,0 +1,3 @@
+- run `vagrant plugin install vagrant-hostmanager`
+- run `vagrant up` 
+- go to http://local/

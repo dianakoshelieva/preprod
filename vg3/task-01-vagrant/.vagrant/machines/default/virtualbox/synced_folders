@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant":{"create":true,"guestpath":"/vagrant","hostpath":"C:/Users/Diana_Koshelieva/Desktop/task-01-vagrant","disabled":false,"__vagrantfile":true},"/var/www":{"create":true,"group":"www-data","owner":"www-data","guestpath":"/var/www","hostpath":"C:/Users/Diana_Koshelieva/Desktop/task-01-vagrant","disabled":false,"__vagrantfile":true}}}
